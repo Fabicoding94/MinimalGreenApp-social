@@ -1,0 +1,14 @@
+Creo il progetto su Spring Inizializer con le giuste dependencies.
+
+Scarico MySQL per il database.
+https://dev.mysql.com/downloads/
+Seleziono MySQL Community Server> clicca >
+installa il primo> No, thanks jaust strart
+my download.
+Impostazioni: Developer default;niente Next;
+Esegui; Next; Type and Networking niente; Next
+Account and Roles password.
+username root; password:mysql. Fine.
+Local instance clicca sul +; Connection name:
+Local instance;
+Store in Vault; password; Test Connection.
