@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -22,7 +21,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    @NotBlank(message = "Post Name cannot be empty or Null")
     private String postName;
     @Lob       //it can be a large object
     private String description;
