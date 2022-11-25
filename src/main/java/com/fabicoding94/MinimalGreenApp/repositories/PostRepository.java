@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // RITORNA UNA LISTA DI POST FILTRATE PER USER ID(PK)
     @Query(
-            value = "select p from Post p where p.user.userId = :id"
+            value = "select p from Post p where p.user.id = :id"
     )
     Page<Post> findPostByUserId(@Param("id") Long id, Pageable pageable );
 }

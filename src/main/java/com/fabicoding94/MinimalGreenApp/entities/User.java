@@ -24,12 +24,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long userId;
+    private Long id;
     private String completeName;
+    @Column(unique= true)
     private String username;
     private String password;
+    @Column(unique= true)
     private String email;
-    private boolean active = true;
+    private Boolean active = true;
 
     @ManyToMany
     @JoinTable(name = "user_roles",
