@@ -115,7 +115,8 @@ public class UserController {
             @RequestParam(value="username",required=true) String username,
             @RequestParam(value="email",required=false) String email,
             @RequestParam(value="password",required=true) String password
-    ) {
+    )
+    {
         User user = User.builder()
                 .completeName(nome)
                 .username(username)
@@ -126,6 +127,7 @@ public class UserController {
 
         return userService.save(user);
     }
+
 
 //
 //    // UPDATE

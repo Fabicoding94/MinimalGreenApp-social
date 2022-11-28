@@ -41,7 +41,6 @@ public class UserDetailsImpl implements UserDetails {
         this.enabled = enabled;
         this.authorities = authorities;
     }
-
     public static UserDetailsImpl build( User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleType().name())).collect(Collectors.toList());
