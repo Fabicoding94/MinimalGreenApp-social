@@ -4,6 +4,8 @@ import com.fabicoding94.MinimalGreenApp.entities.RoleType;
 import com.fabicoding94.MinimalGreenApp.entities.User;
 import com.fabicoding94.MinimalGreenApp.services.RoleService;
 import com.fabicoding94.MinimalGreenApp.services.UserService;
+import com.fabicoding94.MinimalGreenApp.utils.UserRequest;
+import com.fabicoding94.MinimalGreenApp.utils.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,7 @@ public class UserController {
 
     //GET ALL
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @CrossOrigin
     public List<User> getAllUsers() {
 
@@ -39,7 +41,7 @@ public class UserController {
 
     //GET ALL PAGEABLE
     @GetMapping("/pageable")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'USER')")
     public ResponseEntity<Page<User>> getAllUsersPageable( Pageable p ) {
 
         Page<User> findAll = userService.getAllPaginate( p );
@@ -54,7 +56,7 @@ public class UserController {
 
     // GET BY ID
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getById( @PathVariable Long id ) throws Exception {
 
         return new ResponseEntity<>(
@@ -65,7 +67,7 @@ public class UserController {
 
     //GET BY USERNAME (UNIQUE)
     @GetMapping("/username/{username}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN','USER')")
     public ResponseEntity<User> getByUsername( @PathVariable String username ) {
 
         return new ResponseEntity<>(
@@ -76,40 +78,9 @@ public class UserController {
 
     }
 
-//    // GET BY USERNAME CONTAINS
-//    @GetMapping("/username-contains/{username}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<List<User>> getByUsernameContains( @PathVariable String username ) {
-//
-//        return new ResponseEntity<>(
-//                userService.findByUsernameContains( username ),
-//                HttpStatus.OK
-//        );
-//
-//    }
 
-//    // AGGIUNGI UN NUOVO UTENTE CON IL BODY COME RICHIESTA
-//    @PostMapping("/new-raw")
-////    @PreAuthorize("hasRole('ADMIN')")
-//    public UserResponse create( @RequestBody UserRequest user ) {
-//
-//        try {
-//
-//            return userService.createAndSave( user );
-//
-//
-//        } catch( Exception e ) {
-//
-//            log.error( e.getMessage() );
-//
-//        }
-//
-//        return null;
-//
-//    }
-
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/new-user")
+   // @PreAuthorize("hasRole('ADMIN','USER')")
     public User saveUser(
             @RequestParam(value="nome",required=true) String nome,
             @RequestParam(value="username",required=true) String username,
@@ -129,28 +100,22 @@ public class UserController {
     }
 
 
-//
-//    // UPDATE
-//    @PutMapping("/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<UserResponse> update( @RequestBody UserRequest user, @PathVariable("id") Long id ) {
-//
-//        try {
-//            return new ResponseEntity<>( userService.updateResponse( user, id ),
-//                    HttpStatus.OK);
-//
-//
-//        } catch( Exception e ) {
-//
-//            log.error( e.getMessage() );
-//
-//        }
-//        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
-//    }
+   // UPDATE
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN', 'USER')")
+    public ResponseEntity<UserResponse> update(@RequestBody UserRequest user, @PathVariable("id") Long id ) {
+        try {
+            return new ResponseEntity<>( userService.updateResponse( user, id ),
+                    HttpStatus.OK);
+        } catch( Exception e ) {
+            log.error( e.getMessage() );
+        }
+        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    }
 
     // ADD ROLE ADMIN
     @PutMapping("/{id}/add-role/{roleType}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public void addRole(
             @PathVariable("id") Long id,
             @PathVariable("roleType") String roleType
@@ -168,20 +133,40 @@ public class UserController {
 
     }
 
-    // DELETE
-    @DeleteMapping("/delete/{id}")
+    // REMOVE ROLE ADMIN
+    @PutMapping("/{id}/remove-role/{roleType}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteById( @PathVariable Long id ) {
+    public void removeRole(
+            @PathVariable("id") Long id,
+            @PathVariable("roleType") String roleType
+    ) throws Exception {
 
-        try {
+        User u = userService.getById( id );
 
-            userService.delete( id );
+        // if( roleType.equals( "ADMIN" ) ) {
 
-        } catch( Exception e ) {
+        u.removeRole( roleService.getByRole( RoleType.ROLE_ADMIN ) );
 
-            log.error( e.getMessage() );
+        userService.update( u );
+
+        //}
 
         }
 
+        // DELETE
+        @DeleteMapping("/delete/{id}")
+        @PreAuthorize("hasRole('ADMIN')")
+        public void deleteById (@PathVariable Long id ){
+
+            try {
+
+                userService.delete(id);
+
+            } catch (Exception e) {
+
+                log.error(e.getMessage());
+
+            }
+
+        }
     }
-}

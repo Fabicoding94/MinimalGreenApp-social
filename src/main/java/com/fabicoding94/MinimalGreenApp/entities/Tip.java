@@ -14,18 +14,16 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "btips_electricity")
-public class BTipElectricity {
+@Table(name = "tips")
+public class Tip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tipId;
+    private Long Id;
 
     private String tipTitle;
     private String tipContent;
+    private TipType tipType;
 
-    @ManyToOne
-    @JoinColumn(name = "box_save_electricity_box_id")
-    private BoxSaveElectricity boxSaveElectricity;
 
 }

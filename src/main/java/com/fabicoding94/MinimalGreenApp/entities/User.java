@@ -26,10 +26,10 @@ public class User {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String completeName;
-    @Column(unique= true)
+    @Column(unique = true, nullable = false)
     private String username;
     private String password;
-    @Column(unique= true)
+    @Column(unique = true, nullable = false)
     private String email;
     private Boolean active = true;
 
@@ -45,8 +45,13 @@ public class User {
 
     }
 
+    public void removeRole(Role r) {
+        this.roles.remove( r );
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
+
 
 
 }

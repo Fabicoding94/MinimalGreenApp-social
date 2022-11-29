@@ -1,9 +1,12 @@
 package com.fabicoding94.MinimalGreenApp.entities;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+
 
 @Entity
 @Table(name = "roles")
