@@ -102,7 +102,7 @@ public class UserController {
 
    // UPDATE
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> update(@RequestBody UserRequest user, @PathVariable("id") Long id ) {
         try {
             return new ResponseEntity<>( userService.updateResponse( user, id ),
@@ -125,7 +125,7 @@ public class UserController {
 
        // if( roleType.equals( "ADMIN" ) ) {
 
-            u.addRole( roleService.getByRole( RoleType.ROLE_ADMIN ) );
+            u.addRole( roleService.getByRole(RoleType.valueOf(roleType)) );
 
             userService.update( u );
 

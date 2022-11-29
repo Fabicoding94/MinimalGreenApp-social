@@ -8,17 +8,14 @@ import com.fabicoding94.MinimalGreenApp.entities.User;
 import com.fabicoding94.MinimalGreenApp.repositories.TipRepository;
 import com.fabicoding94.MinimalGreenApp.utils.TipRequest;
 import com.fabicoding94.MinimalGreenApp.utils.TipResponse;
-import com.fabicoding94.MinimalGreenApp.utils.UserRequest;
-import com.fabicoding94.MinimalGreenApp.utils.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +35,18 @@ public class TipService {
     // GET ALL AND PAGINATE
     public Page<Tip> getAllPaginate(Pageable p ) {
         return tipRepository.findAll( p );
+    }
+
+
+    // GET BY TITLE
+    public Optional<Tip> findByTitle(String tipTitle ) {
+
+        return tipRepository.findByTipTitle( tipTitle );
+    }
+
+    // GET BY TITLE-CONTAINS CONTAINS
+    public List<Tip> findByTipTitleContains(String tipTitle) {
+        return tipRepository.getTipByTipTitleContains( tipTitle );
     }
 
 

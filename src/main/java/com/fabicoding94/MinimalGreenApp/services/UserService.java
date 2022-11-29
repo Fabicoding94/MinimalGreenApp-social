@@ -42,10 +42,10 @@ public class UserService {
         return userRepository.findByUsername( username );
     }
 
-//    // GET BY USERNAME CONTAINS
-//    public List<User> findByUsername( String username) {
-//        return userRepository.getUserByUsername( username );
-//    }
+    // GET BY USERNAME CONTAINS
+    public List<User> findByUsernameContains( String username) {
+        return userRepository.getUserByUsernameContains( username );
+    }
 
     // GET ALL
     public List<User> getAll() {

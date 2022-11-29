@@ -33,23 +33,23 @@ public class TipController {
     private TipRepository tipRepository ;
 
 
-    // GET ALL the tips
+    // GET ALL the tips - (TUTTI gli ospiti possono leggere le tips senza login)
     @GetMapping("")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<List<Tip>> getAll() {
         return new ResponseEntity<>(tipRepository.findAll(), HttpStatus.OK);
     }
 
     // GET ALL the tips AND PAGINATE
     @GetMapping("/pageable")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','USER')") - (TUTTI gli ospiti possono leggere le tips)
     public ResponseEntity<Page<Tip>> getAllPageable( Pageable p) {
         return new ResponseEntity<>(tipService.getAllPaginate( p ), HttpStatus.OK);
     }
 
     // GET tip BY ID
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping("/{}")
+    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<Tip> get(@PathVariable("id") Long id ) throws Exception {
         return new ResponseEntity<>(
                 tipService.getById( id ),
@@ -57,9 +57,34 @@ public class TipController {
         );
     }
 
-    // CREATE NEW TIPS (solo gli admin possono creare le Tip (post statici sui consigli))
+    //GET BY TipTITLE
+    @GetMapping("/tipTitle/{tipTitle}")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Tip> getByTipTitle( @PathVariable String tipTitle ) {
+
+        return new ResponseEntity<>(
+                tipService.findByTitle( tipTitle ).isPresent() ?
+                        tipService.findByTitle( tipTitle ).get() : null,
+                HttpStatus.OK
+        );
+
+    }
+
+    // GET BY TipTITLE CONTAINS
+    @GetMapping("/tipTitle-contains/{tipTitle}")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Tip>> getByTipTitleContains( @PathVariable String tipTitle ) {
+
+        return new ResponseEntity<>(
+                tipService.findByTipTitleContains( tipTitle ),
+                HttpStatus.OK
+        );
+
+    }
+
+    // CREATE NEW TIPS - Solo i MODERATORS possono postare le Tips
     @PostMapping("/new-tip")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MODERATOR')")
     public ResponseEntity<Tip> create( @RequestBody TipRequest tipRequest ) {
         try {
             Tip tip = Tip.builder()
@@ -76,9 +101,9 @@ public class TipController {
     }
 
 
-    // UPDATE
+    // UPDATE - Solo i MODERATORS possono modificare le Tips
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<TipResponse> update(@RequestBody TipRequest tip, @PathVariable("id") Long id ) {
         try {
             return new ResponseEntity<>( tipService.updateResponse( tip, id ),
@@ -89,9 +114,11 @@ public class TipController {
         return new ResponseEntity<>( HttpStatus.NOT_FOUND);
     }
 
-    //DELETE
+
+
+    //DELETE - Solo i MODERATORS possono cancellare le Tips
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MODERATOR')")
     public void deleteById( @PathVariable("id") Long id ) {
         try {
             tipService.delete( id );
