@@ -1,10 +1,9 @@
 package com.fabicoding94.MinimalGreenApp.services;
 
 
-import com.fabicoding94.MinimalGreenApp.entities.Tip;
-import com.fabicoding94.MinimalGreenApp.entities.TipType;
+import com.fabicoding94.MinimalGreenApp.entities.tip.Tip;
+import com.fabicoding94.MinimalGreenApp.entities.tip.TipType;
 
-import com.fabicoding94.MinimalGreenApp.entities.User;
 import com.fabicoding94.MinimalGreenApp.repositories.TipRepository;
 import com.fabicoding94.MinimalGreenApp.utils.TipRequest;
 import com.fabicoding94.MinimalGreenApp.utils.TipResponse;

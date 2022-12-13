@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthController {
 
     @Autowired
@@ -29,7 +29,6 @@ public class AuthController {
 
     @Autowired
     UserService us;
-
 
     @Autowired
     JwtUtils jwtUtils;

@@ -1,6 +1,6 @@
 package com.fabicoding94.MinimalGreenApp.security;
 
-import com.fabicoding94.MinimalGreenApp.entities.User;
+import com.fabicoding94.MinimalGreenApp.entities.user.User;
 import com.fabicoding94.MinimalGreenApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

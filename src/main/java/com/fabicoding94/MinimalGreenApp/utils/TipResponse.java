@@ -1,10 +1,8 @@
 package com.fabicoding94.MinimalGreenApp.utils;
 
-import com.fabicoding94.MinimalGreenApp.entities.Tip;
-import com.fabicoding94.MinimalGreenApp.entities.TipType;
+import com.fabicoding94.MinimalGreenApp.entities.tip.Tip;
+import com.fabicoding94.MinimalGreenApp.entities.tip.TipType;
 import lombok.*;
-
-import java.util.Set;
 
 @Builder
 @AllArgsConstructor

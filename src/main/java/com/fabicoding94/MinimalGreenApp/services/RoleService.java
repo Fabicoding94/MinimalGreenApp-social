@@ -1,7 +1,7 @@
 package com.fabicoding94.MinimalGreenApp.services;
 
-import com.fabicoding94.MinimalGreenApp.entities.Role;
-import com.fabicoding94.MinimalGreenApp.entities.RoleType;
+import com.fabicoding94.MinimalGreenApp.entities.user.Role;
+import com.fabicoding94.MinimalGreenApp.entities.user.RoleType;
 import com.fabicoding94.MinimalGreenApp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,18 +19,20 @@ public class RoleService {
 
     // GET BY ID
     public Role getById(Long id) throws Exception {
-        Optional<Role> ba = repository.findById(id);
-        if ( ba.isEmpty() )
+        Optional<Role> role = repository.findById(id);
+        if ( role.isEmpty() )
             throw new Exception("Role not available");
-        return ba.get();
+        return role.get();
     }
 
     // GET BY ROLE
     public Role getByRole( RoleType roleType) throws Exception {
-        Optional<Role> ba = repository.findByRoleType(roleType);
-        if ( ba.isEmpty() )
+
+        Optional<Role> role = repository.findByRoleType(roleType);
+        if ( role.isEmpty() )
             throw new Exception("Role not available");
-        return ba.get();
+
+        return role.get();
     }
 
     // GET ALL PAGEABLE

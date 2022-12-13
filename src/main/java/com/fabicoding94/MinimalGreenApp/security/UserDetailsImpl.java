@@ -1,6 +1,6 @@
 package com.fabicoding94.MinimalGreenApp.security;
 
-import com.fabicoding94.MinimalGreenApp.entities.User;
+import com.fabicoding94.MinimalGreenApp.entities.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

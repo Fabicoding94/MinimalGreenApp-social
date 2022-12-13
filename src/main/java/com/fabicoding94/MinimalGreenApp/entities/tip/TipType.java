@@ -1,4 +1,4 @@
-package com.fabicoding94.MinimalGreenApp.entities;
+package com.fabicoding94.MinimalGreenApp.entities.tip;
 
 public enum TipType {
     SAVE_WATER,

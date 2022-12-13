@@ -1,14 +1,12 @@
 package com.fabicoding94.MinimalGreenApp.controllers;
 
 
-import com.fabicoding94.MinimalGreenApp.entities.Tip;
-import com.fabicoding94.MinimalGreenApp.entities.TipType;
+import com.fabicoding94.MinimalGreenApp.entities.tip.Tip;
+import com.fabicoding94.MinimalGreenApp.entities.tip.TipType;
 import com.fabicoding94.MinimalGreenApp.repositories.TipRepository;
 import com.fabicoding94.MinimalGreenApp.services.TipService;
 import com.fabicoding94.MinimalGreenApp.utils.TipRequest;
 import com.fabicoding94.MinimalGreenApp.utils.TipResponse;
-import com.fabicoding94.MinimalGreenApp.utils.UserRequest;
-import com.fabicoding94.MinimalGreenApp.utils.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,7 +82,7 @@ public class TipController {
 
     // CREATE NEW TIPS - Solo i MODERATORS possono postare le Tips
     @PostMapping("/new-tip")
-    @PreAuthorize("hasAnyRole('MODERATOR')")
+    //@PreAuthorize("hasAnyRole('MODERATOR')")
     public ResponseEntity<Tip> create( @RequestBody TipRequest tipRequest ) {
         try {
             Tip tip = Tip.builder()
@@ -103,7 +101,7 @@ public class TipController {
 
     // UPDATE - Solo i MODERATORS possono modificare le Tips
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('MODERATOR')")
+    //@PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<TipResponse> update(@RequestBody TipRequest tip, @PathVariable("id") Long id ) {
         try {
             return new ResponseEntity<>( tipService.updateResponse( tip, id ),
@@ -118,7 +116,7 @@ public class TipController {
 
     //DELETE - Solo i MODERATORS possono cancellare le Tips
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyRole('MODERATOR')")
+    //@PreAuthorize("hasAnyRole('MODERATOR')")
     public void deleteById( @PathVariable("id") Long id ) {
         try {
             tipService.delete( id );

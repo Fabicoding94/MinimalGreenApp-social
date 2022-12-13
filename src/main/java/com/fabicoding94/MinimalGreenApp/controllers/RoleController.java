@@ -1,8 +1,7 @@
 package com.fabicoding94.MinimalGreenApp.controllers;
 
-import com.fabicoding94.MinimalGreenApp.entities.Role;
-import com.fabicoding94.MinimalGreenApp.entities.RoleType;
-import com.fabicoding94.MinimalGreenApp.entities.User;
+import com.fabicoding94.MinimalGreenApp.entities.user.Role;
+import com.fabicoding94.MinimalGreenApp.entities.user.RoleType;
 import com.fabicoding94.MinimalGreenApp.services.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,8 @@ public class RoleController {
 
     @Autowired
     private RoleService rs;
+
+    //------------------------- Get ---------------------------
 
     // GET ALL
     @GetMapping("")
@@ -49,6 +50,22 @@ public class RoleController {
     public ResponseEntity<Role> readById(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(rs.getById(id), HttpStatus.OK);
     }
+//---------------------------- Post --------------------------------
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Role saveRole(
+            @RequestParam(value="roleType",required=false) RoleType roleType
+    ) {
+        Role role = Role.builder()
+                .roleType(roleType)
+                .build();
+
+
+        return rs.save(role);
+    }
+
+//---------------------------- Put ---------------------------------
 
 
     // UPDATE
@@ -61,7 +78,7 @@ public class RoleController {
             log.error(e.getMessage());
         }
     }
-
+    //-------------------------- Delete -------------------------------
     // DELETE
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
