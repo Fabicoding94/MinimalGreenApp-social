@@ -107,8 +107,8 @@ public class TipService {
 
 
     // RITORNA UNA LISTA DI Tips FILTRATE PER TipType
-    public Page<Tip> filterTipByTipType( TipType tipType, Pageable pageable ) {
-        return tipRepository.findTipsByTipType(tipType, pageable);
+    public List<Tip> filterTipByTipType( TipType tipType) {
+        return tipRepository.findTipsByTipType(tipType);
     }
 
 

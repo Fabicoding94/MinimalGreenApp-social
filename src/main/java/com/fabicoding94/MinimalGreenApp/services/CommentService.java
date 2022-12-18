@@ -49,9 +49,9 @@ public class CommentService {
 
 //	--------------------------- Filtering --------------------------------
 
-    public Page<Comment> getByPostAndPaginate(Long id, Pageable p){
-        return repository.getCommentsByPostId(id, p);
-    }
+//    public Page<Comment> getByPostAndPaginate(Long id, Pageable p){
+//        return repository.getCommentsByPostId(id, p);
+//    }
 
     /*public Page<Comment> getBySenderAndPaginate(Long id, Pageable p){
         return repository.getCommentsBySenderId(id, p);

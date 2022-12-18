@@ -29,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin("*")
+@CrossOrigin(origins= "http://localhost:4200")
 public class PostController {
 
     @Autowired
@@ -61,12 +61,7 @@ public class PostController {
 
         return postService.getAll();
 
-        //TODO
-//    	 if (res.isEmpty()){
-//             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//         } else{
-//             return new ResponseEntity<>(res, HttpStatus.OK);
-//         }
+
     }
 
     @GetMapping("{id}")

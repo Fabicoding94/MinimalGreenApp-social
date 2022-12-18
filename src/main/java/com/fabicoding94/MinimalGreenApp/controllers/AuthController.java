@@ -1,5 +1,6 @@
 package com.fabicoding94.MinimalGreenApp.controllers;
 
+
 import com.fabicoding94.MinimalGreenApp.security.JwtUtils;
 import com.fabicoding94.MinimalGreenApp.security.LoginRequest;
 import com.fabicoding94.MinimalGreenApp.security.LoginResponse;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
-//@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthController {
 
     @Autowired

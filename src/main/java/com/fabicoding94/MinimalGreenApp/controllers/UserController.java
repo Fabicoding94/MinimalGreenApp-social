@@ -35,7 +35,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*") //serve per collegare il fe al be
+@CrossOrigin(origins = "http://localhost:4200/") //serve per collegare il fe al be
 public class UserController {
 
     @Autowired

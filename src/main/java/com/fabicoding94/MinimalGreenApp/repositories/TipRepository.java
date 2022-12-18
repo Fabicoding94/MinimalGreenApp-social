@@ -21,7 +21,7 @@ public interface TipRepository extends JpaRepository<Tip, Long> {
 
     // RITORNA UNA LISTA DI TIPS FILTRATE PER TYPE
     @Query("select t from Tip t where t.tipType = :tipType")
-    Page<Tip> findTipsByTipType(@Param( "tipType" ) TipType tipType, Pageable pageable );
+    List<Tip> findTipsByTipType(@Param( "tipType" ) TipType tipType );
 
     // RITORNA UNA LISTA DI TIPS che hanno in comune i caratteri digitati
     @Query(

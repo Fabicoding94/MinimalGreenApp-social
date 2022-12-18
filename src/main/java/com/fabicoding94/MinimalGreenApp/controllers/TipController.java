@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tips")
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TipController {
 
     @Autowired
@@ -129,10 +129,20 @@ public class TipController {
     // RITORNA UNA LISTA DI Tips FILTRATE PER TipType
     @GetMapping("/tipType/{tipType}")
     //@PreAuthorize("hasAnyRole('ADMIN','USER')")
-    public ResponseEntity<Page<Tip>> getTipsByTipType( @PathVariable("tipType") TipType tipType, Pageable p ) {
+    public ResponseEntity<List<Tip>> getTipsByTipType( @PathVariable("tipType") TipType tipType ) {
 
         return new ResponseEntity<>(
-                tipService.filterTipByTipType( tipType, p ),
+                tipService.filterTipByTipType( tipType  ),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/tipTypeP/{tipType}")
+    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<List<Tip>> getTipsByTipTypeP( @PathVariable("tipType") TipType tipType ) {
+
+        return new ResponseEntity<>(
+                tipService.filterTipByTipType( tipType  ),
                 HttpStatus.OK
         );
     }

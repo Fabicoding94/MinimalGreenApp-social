@@ -17,8 +17,11 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     //List<Comment> findAllByUser(User sender);
 
+//    @Query( value = "SELECT c FROM Comment c WHERE c.post.id = :id" )
+//    Page<Comment> getCommentsByPostId(Long id, Pageable p);
+
     @Query( value = "SELECT c FROM Comment c WHERE c.post.id = :id" )
-    Page<Comment> getCommentsByPostId(Long id, Pageable p);
+    List<Comment> getCommentsByPostId();
 
     @Query( value = "SELECT c FROM Comment c WHERE c.sender.id = :id" )
     Page<Comment> getCommentsBySenderId(Long id, Pageable p);

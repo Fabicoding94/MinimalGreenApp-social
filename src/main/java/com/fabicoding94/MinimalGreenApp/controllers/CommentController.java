@@ -46,16 +46,23 @@ public class CommentController {
 
 //---------------------------- Get ---------------------------------
 
+//    @GetMapping
+//    public ResponseEntity<Page<Comment>> getCommentList(Pageable p) {
+//
+//        Page<Comment> res = commentService.getAllAndPaginate(p);
+//
+//        if (res.isEmpty()){
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else{
+//            return new ResponseEntity<>(res, HttpStatus.OK);
+//        }
+//    }
+
     @GetMapping
-    public ResponseEntity<Page<Comment>> getCommentList(Pageable p) {
+    public List<Comment> getCommentList() {
 
-        Page<Comment> res = commentService.getAllAndPaginate(p);
+        return commentService.getAll();
 
-        if (res.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else{
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        }
     }
 
     @GetMapping("{id}")
@@ -63,10 +70,10 @@ public class CommentController {
         return commentService.getById(id);
     }
 
-    @GetMapping("post_id/{id}")
-    public Page<Comment> getCommentsByPost(@PathVariable("id") Long id, Pageable p) {
-        return commentService.getByPostAndPaginate(id, p);
-    }
+//    @GetMapping("post_id/{id}")
+//    public Page<Comment> getCommentsByPost(@PathVariable("id") Long id, Pageable p) {
+//        return commentService.getByPostAndPaginate(id, p);
+//    }
 
 //    @GetMapping("sender_id/{id}")
 //    public Page<Comment> getCommentsBySender(@PathVariable("id") Long id, Pageable p) {
@@ -97,14 +104,25 @@ public class CommentController {
 
     //---------------------------- Put ---------------------------------
 
+//    @PutMapping("/{id}")
+//    public Comment updateComment(@PathVariable("id") Long id, @RequestBody String text ) {
+//
+//        Comment comment = commentService.getById(id);
+//        comment.setText(text);
+//        comment.setEdited(true);
+//
+//        return commentService.save(comment);
+//    }
+
     @PutMapping("/{id}")
-    public Comment updateComment(@PathVariable("id") Long id, @RequestBody String text ) {
+    public Comment updateComment(@PathVariable("id") Long id, @RequestBody CommentUpDateDTO update) {
 
         Comment comment = commentService.getById(id);
-        comment.setText(text);
-        comment.setEdited(true);
 
-        return commentService.save(comment);
+        if (update.getText() != null) comment.setText(update.getText());
+
+        commentService.save(comment);
+        return comment;
     }
 
     @PutMapping("/{id}/like")
